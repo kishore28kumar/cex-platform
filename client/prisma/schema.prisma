@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String     @id @default(uuid())
+  username    String
+  password    String
+  solWalletID String?
+  solWallet   SolWallet?
+  InrWalletID String?
+  InrWallet   InrWallet?
+}
+
+model InrWallet {
+  id      String @id @default(uuid())
+  balance Int
+  userID  String @unique
+  user    User   @relation(fields: [userID], references: [id])
+}
+
+model SolWallet {
+  id         String @id @default(uuid())
+  publicKey  String
+  privateKey String
+  userID     String @unique
+  user       User   @relation(fields: [userID], references: [id])
+}
