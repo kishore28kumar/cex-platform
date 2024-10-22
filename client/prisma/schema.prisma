@@ -13,11 +13,12 @@ datasource db {
 model User {
   id          String     @id @default(uuid())
   username    String
-  password    String
+  password    String?
   solWalletID String?
   solWallet   SolWallet?
   InrWalletID String?
   InrWallet   InrWallet?
+  provider    Provider
 }
 
 model InrWallet {
@@ -33,4 +34,8 @@ model SolWallet {
   privateKey String
   userID     String @unique
   user       User   @relation(fields: [userID], references: [id])
+}
+
+enum Provider {
+  Google
 }
