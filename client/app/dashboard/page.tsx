@@ -12,6 +12,7 @@ export default function () {
 
   if (!session.data?.user) {
     route.push("/");
+    return null;
   }
 
   return (
@@ -21,6 +22,7 @@ export default function () {
           image={session.data?.user?.image ?? ""}
           name={session.data?.user?.name ?? ""}
         />
+        <Assets />
       </div>
     </div>
   );
@@ -33,4 +35,12 @@ function Greeting({ image, name }: { image: string; name: string }) {
       <div className="text-3xl font-bold pl-3">Welcome Back, {name}!</div>
     </div>
   );
+}
+
+function Assets(){
+  return(
+    <div className="text-xl text-slate-400 pt-3">
+      Account Assets
+    </div>
+  )
 }
