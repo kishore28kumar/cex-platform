@@ -2,6 +2,9 @@ import { Connection } from "@solana/web3.js";
 import axios from "axios";
 
 let LAST_UPDATED : number | null = null;
+let prices: {[key: string]:{
+    price: string;
+}}
 const TOKEN_PRICE_REFRESH_INTERVAL = 60*1000; // every 60s
 export let SUPPORTED_TOKENS: {
     name: string;
@@ -17,7 +20,7 @@ export let SUPPORTED_TOKENS: {
     native: false
 },{
     name: "SOL",
-    mint: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+    mint: "So11111111111111111111111111111111111111112",
     native: false
 }]
 
@@ -29,5 +32,8 @@ export async function getSupportedTokens() {
         const prices = response.data;
         LAST_UPDATED =  new Date().getTime();
     }
-    SUPPORTED_TOKENS.map(s => )
+    return SUPPORTED_TOKENS.map(s => ({
+        ...s,
+        price:  prices[s.name]
+    }))
 }
